@@ -62,7 +62,7 @@ const About = () => {
           <div className="bg-white/80 backdrop-blur-sm p-6 rounded-3xl shadow-xl border border-gray-100">
 
             <h2 className="text-3xl font-bold text-gray-900 text-center mb-6">
-              System Demonstration
+             Team Intro
             </h2>
 
             <div className="w-full aspect-video rounded-2xl overflow-hidden">
