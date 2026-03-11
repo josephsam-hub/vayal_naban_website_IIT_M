@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import axios from 'axios'
-import { Send, CheckCircle, AlertCircle, User, Phone, Mail, MessageSquare } from 'lucide-react'
+import { Send, CheckCircle, AlertCircle, User, Phone, Mail, MessageSquare, Sparkles } from 'lucide-react'
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -49,63 +49,99 @@ const Contact = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1
+        staggerChildren: 0.1,
+        delayChildren: 0.1
       }
     }
   }
 
   const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
+    hidden: { y: 30, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
       transition: {
-        duration: 0.6
+        duration: 0.6,
+        ease: [0.25, 0.46, 0.45, 0.94]
       }
     }
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-primary-50">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="min-h-screen bg-dark-800 relative overflow-hidden">
+      {/* Background effects */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-primary-500/10 rounded-full blur-[150px]" />
+        <div className="absolute bottom-1/4 right-1/3 w-[400px] h-[400px] bg-secondary-500/10 rounded-full blur-[120px]" />
+        {/* Grid pattern */}
+        <div 
+          className="absolute inset-0 opacity-[0.02]"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(10, 182, 188, 1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(10, 182, 188, 1) 1px, transparent 1px)
+            `,
+            backgroundSize: '80px 80px'
+          }}
+        />
+      </div>
+
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 pt-28 relative z-10">
+        {/* Header */}
         <motion.div 
           initial="hidden"
           animate="visible"
           variants={containerVariants}
           className="text-center mb-12"
         >
+          <motion.span 
+            variants={itemVariants}
+            className="inline-block px-4 py-1.5 rounded-full border border-primary-500/30 bg-primary-500/5 text-primary-400 text-sm tracking-wider uppercase mb-6"
+          >
+            Get In Touch
+          </motion.span>
           <motion.h1 
             variants={itemVariants}
-            className="text-5xl font-bold bg-gradient-to-r from-primary-600 via-accent-600 to-purple-600 bg-clip-text text-transparent mb-6"
+            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
           >
-            Contact Our Team
+            <span className="text-highlight-500">Contact</span>
+            <br />
+            <span className="gradient-text font-['Orbitron']">Our Team</span>
           </motion.h1>
           <motion.p 
             variants={itemVariants}
-            className="text-xl text-gray-600 leading-relaxed"
+            className="text-lg text-highlight-500/50 leading-relaxed max-w-2xl mx-auto"
           >
             Get in touch with our team for technical support, demonstrations, or inquiries about the Vayal Agro system.
           </motion.p>
         </motion.div>
 
+        {/* Contact Form */}
         <motion.div 
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl border border-gray-100 overflow-hidden"
+          className="glass-card rounded-3xl overflow-hidden relative"
         >
-          <div className="p-8 md:p-12">
+          {/* Corner accents */}
+          <div className="absolute top-0 left-0 w-24 h-24 border-l-2 border-t-2 border-primary-500/30 rounded-tl-3xl" />
+          <div className="absolute top-0 right-0 w-24 h-24 border-r-2 border-t-2 border-primary-500/30 rounded-tr-3xl" />
+          <div className="absolute bottom-0 left-0 w-24 h-24 border-l-2 border-b-2 border-primary-500/30 rounded-bl-3xl" />
+          <div className="absolute bottom-0 right-0 w-24 h-24 border-r-2 border-b-2 border-primary-500/30 rounded-br-3xl" />
+
+          <div className="p-8 md:p-12 relative">
             <form onSubmit={handleSubmit} className="space-y-8">
               <div className="grid md:grid-cols-2 gap-8">
+                {/* Name Input */}
                 <motion.div
-                  whileHover={{ scale: 1.02 }}
-                  className="relative"
+                  whileHover={{ scale: 1.01 }}
+                  className="group"
                 >
-                  <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-3">
+                  <label htmlFor="name" className="block text-sm font-semibold text-highlight-500/80 mb-3">
                     Full Name *
                   </label>
                   <div className="relative">
-                    <User className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                    <User className="absolute left-4 top-1/2 transform -translate-y-1/2 text-primary-500/50 w-5 h-5 group-focus-within:text-primary-400 transition-colors" />
                     <input
                       type="text"
                       id="name"
@@ -113,21 +149,22 @@ const Contact = () => {
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      className="w-full pl-12 pr-4 py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-300 bg-white/50 backdrop-blur-sm"
+                      className="w-full pl-12 pr-4 py-4 rounded-xl bg-dark-500/50 border border-primary-500/20 text-highlight-500 placeholder-highlight-500/30 focus:outline-none focus:border-primary-500/50 focus:bg-dark-500/70 transition-all duration-300"
                       placeholder="Enter your full name"
                     />
                   </div>
                 </motion.div>
 
+                {/* Phone Input */}
                 <motion.div
-                  whileHover={{ scale: 1.02 }}
-                  className="relative"
+                  whileHover={{ scale: 1.01 }}
+                  className="group"
                 >
-                  <label htmlFor="phone" className="block text-sm font-semibold text-gray-700 mb-3">
+                  <label htmlFor="phone" className="block text-sm font-semibold text-highlight-500/80 mb-3">
                     Phone Number *
                   </label>
                   <div className="relative">
-                    <Phone className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                    <Phone className="absolute left-4 top-1/2 transform -translate-y-1/2 text-primary-500/50 w-5 h-5 group-focus-within:text-primary-400 transition-colors" />
                     <input
                       type="tel"
                       id="phone"
@@ -135,22 +172,23 @@ const Contact = () => {
                       value={formData.phone}
                       onChange={handleChange}
                       required
-                      className="w-full pl-12 pr-4 py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-300 bg-white/50 backdrop-blur-sm"
+                      className="w-full pl-12 pr-4 py-4 rounded-xl bg-dark-500/50 border border-primary-500/20 text-highlight-500 placeholder-highlight-500/30 focus:outline-none focus:border-primary-500/50 focus:bg-dark-500/70 transition-all duration-300"
                       placeholder="Enter your phone number"
                     />
                   </div>
                 </motion.div>
               </div>
 
+              {/* Email Input */}
               <motion.div
-                whileHover={{ scale: 1.02 }}
-                className="relative"
+                whileHover={{ scale: 1.01 }}
+                className="group"
               >
-                <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-3">
+                <label htmlFor="email" className="block text-sm font-semibold text-highlight-500/80 mb-3">
                   Email Address *
                 </label>
                 <div className="relative">
-                  <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+                  <Mail className="absolute left-4 top-1/2 transform -translate-y-1/2 text-primary-500/50 w-5 h-5 group-focus-within:text-primary-400 transition-colors" />
                   <input
                     type="email"
                     id="email"
@@ -158,17 +196,18 @@ const Contact = () => {
                     value={formData.email}
                     onChange={handleChange}
                     required
-                    className="w-full pl-12 pr-4 py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-300 bg-white/50 backdrop-blur-sm"
+                    className="w-full pl-12 pr-4 py-4 rounded-xl bg-dark-500/50 border border-primary-500/20 text-highlight-500 placeholder-highlight-500/30 focus:outline-none focus:border-primary-500/50 focus:bg-dark-500/70 transition-all duration-300"
                     placeholder="Enter your email address"
                   />
                 </div>
               </motion.div>
 
+              {/* Reason Select */}
               <motion.div
-                whileHover={{ scale: 1.02 }}
-                className="relative"
+                whileHover={{ scale: 1.01 }}
+                className="group"
               >
-                <label htmlFor="reason" className="block text-sm font-semibold text-gray-700 mb-3">
+                <label htmlFor="reason" className="block text-sm font-semibold text-highlight-500/80 mb-3">
                   Reason for Contact *
                 </label>
                 <select
@@ -177,25 +216,32 @@ const Contact = () => {
                   value={formData.reason}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-300 bg-white/50 backdrop-blur-sm"
+                  className="w-full px-4 py-4 rounded-xl bg-dark-500/50 border border-primary-500/20 text-highlight-500 focus:outline-none focus:border-primary-500/50 focus:bg-dark-500/70 transition-all duration-300 appearance-none cursor-pointer"
+                  style={{
+                    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%230AB6BC'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E")`,
+                    backgroundRepeat: 'no-repeat',
+                    backgroundPosition: 'right 1rem center',
+                    backgroundSize: '1.5rem'
+                  }}
                 >
-                  <option value="">Select a reason</option>
-                  <option value="Technical support">Technical Support</option>
-                  <option value="Hardware inquiry">Hardware Inquiry</option>
-                  <option value="Demonstration request">Demonstration Request</option>
-                  <option value="Other">Other</option>
+                  <option value="" className="bg-dark-500 text-highlight-500/50">Select a reason</option>
+                  <option value="Technical support" className="bg-dark-500">Technical Support</option>
+                  <option value="Hardware inquiry" className="bg-dark-500">Hardware Inquiry</option>
+                  <option value="Demonstration request" className="bg-dark-500">Demonstration Request</option>
+                  <option value="Other" className="bg-dark-500">Other</option>
                 </select>
               </motion.div>
 
+              {/* Message Textarea */}
               <motion.div
-                whileHover={{ scale: 1.02 }}
-                className="relative"
+                whileHover={{ scale: 1.01 }}
+                className="group"
               >
-                <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-3">
+                <label htmlFor="message" className="block text-sm font-semibold text-highlight-500/80 mb-3">
                   Message *
                 </label>
                 <div className="relative">
-                  <MessageSquare className="absolute left-4 top-6 text-gray-400 w-5 h-5" />
+                  <MessageSquare className="absolute left-4 top-6 text-primary-500/50 w-5 h-5 group-focus-within:text-primary-400 transition-colors" />
                   <textarea
                     id="message"
                     name="message"
@@ -203,12 +249,13 @@ const Contact = () => {
                     onChange={handleChange}
                     required
                     rows={6}
-                    className="w-full pl-12 pr-4 py-4 border-2 border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-300 bg-white/50 backdrop-blur-sm resize-none"
+                    className="w-full pl-12 pr-4 py-4 rounded-xl bg-dark-500/50 border border-primary-500/20 text-highlight-500 placeholder-highlight-500/30 focus:outline-none focus:border-primary-500/50 focus:bg-dark-500/70 transition-all duration-300 resize-none"
                     placeholder="Please provide details about your inquiry or request"
                   />
                 </div>
               </motion.div>
 
+              {/* Submit Button */}
               <motion.div
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
@@ -216,35 +263,42 @@ const Contact = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-gradient-to-r from-primary-600 to-primary-700 text-white py-4 px-8 rounded-xl font-semibold text-lg hover:from-primary-700 hover:to-primary-800 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center space-x-3"
+                  className="group relative w-full py-4 px-8 rounded-xl font-semibold text-lg overflow-hidden btn-glow disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  {isSubmitting ? (
-                    <>
-                      <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                      <span>Sending...</span>
-                    </>
-                  ) : (
-                    <>
-                      <Send className="w-5 h-5" />
-                      <span>Send Message</span>
-                    </>
-                  )}
+                  <span className="absolute inset-0 bg-gradient-to-r from-primary-500 to-secondary-500" />
+                  <span className="absolute inset-[1px] bg-dark-500 rounded-[10px]" />
+                  <span className="relative flex items-center justify-center gap-3 text-primary-400">
+                    {isSubmitting ? (
+                      <>
+                        <div className="w-5 h-5 border-2 border-primary-400/30 border-t-primary-400 rounded-full animate-spin" />
+                        <span>Sending...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                        <span>Send Message</span>
+                      </>
+                    )}
+                  </span>
                 </button>
               </motion.div>
 
+              {/* Success Message */}
               {submitStatus === 'success' && (
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="bg-gradient-to-r from-green-50 to-green-100 border-2 border-green-200 rounded-2xl p-6"
+                  className="p-6 rounded-2xl bg-green-500/10 border border-green-500/30"
                 >
-                  <div className="flex items-start space-x-4">
-                    <CheckCircle className="w-6 h-6 text-green-600 flex-shrink-0 mt-1" />
+                  <div className="flex items-start gap-4">
+                    <div className="p-2 rounded-lg bg-green-500/20">
+                      <CheckCircle className="w-6 h-6 text-green-400" />
+                    </div>
                     <div>
-                      <h3 className="text-lg font-semibold text-green-800 mb-2">
+                      <h3 className="text-lg font-semibold text-green-400 mb-2">
                         Message Sent Successfully!
                       </h3>
-                      <p className="text-green-700 leading-relaxed">
+                      <p className="text-green-400/70 leading-relaxed">
                         Thank you for your inquiry about the Vayal Agro system. Our team will review your message and respond within 24-48 hours. 
                         For urgent technical support, please include your contact information and system details.
                       </p>
@@ -253,19 +307,22 @@ const Contact = () => {
                 </motion.div>
               )}
 
+              {/* Error Message */}
               {submitStatus === 'error' && (
                 <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="bg-gradient-to-r from-red-50 to-red-100 border-2 border-red-200 rounded-2xl p-6"
+                  className="p-6 rounded-2xl bg-red-500/10 border border-red-500/30"
                 >
-                  <div className="flex items-start space-x-4">
-                    <AlertCircle className="w-6 h-6 text-red-600 flex-shrink-0 mt-1" />
+                  <div className="flex items-start gap-4">
+                    <div className="p-2 rounded-lg bg-red-500/20">
+                      <AlertCircle className="w-6 h-6 text-red-400" />
+                    </div>
                     <div>
-                      <h3 className="text-lg font-semibold text-red-800 mb-2">
+                      <h3 className="text-lg font-semibold text-red-400 mb-2">
                         Error Sending Message
                       </h3>
-                      <p className="text-red-700 leading-relaxed">
+                      <p className="text-red-400/70 leading-relaxed">
                         There was an error sending your message. Please check your internet connection and try again. 
                         If the problem persists, please contact us directly through alternative means.
                       </p>
@@ -277,6 +334,9 @@ const Contact = () => {
           </div>
         </motion.div>
       </div>
+
+      {/* Bottom spacing */}
+      <div className="h-20" />
     </div>
   )
 }

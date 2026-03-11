@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Users, Mail, Phone, Heart, Target, Lightbulb } from 'lucide-react'
+import { Users, Mail, Phone, Heart, Target, Lightbulb, Sparkles } from 'lucide-react'
 
 const About = () => {
   const teamMembers = [
@@ -16,64 +16,133 @@ const About = () => {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1
+        staggerChildren: 0.1,
+        delayChildren: 0.1
       }
     }
   }
 
   const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
+    hidden: { y: 30, opacity: 0 },
     visible: {
       y: 0,
       opacity: 1,
       transition: {
-        duration: 0.6
+        duration: 0.6,
+        ease: [0.25, 0.46, 0.45, 0.94]
       }
     }
   }
 
+  const missions = [
+    {
+      icon: <Lightbulb className="w-10 h-10" />,
+      title: "Innovation",
+      description: "Continuously pushing the boundaries of autonomous robotics to create smarter, more efficient systems.",
+      color: "primary"
+    },
+    {
+      icon: <Target className="w-10 h-10" />,
+      title: "Precision",
+      description: "Delivering highly accurate and reliable automation solutions for critical agricultural and warehouse operations.",
+      color: "secondary"
+    },
+    {
+      icon: <Heart className="w-10 h-10" />,
+      title: "Sustainability",
+      description: "Creating environmentally conscious solutions that promote sustainable practices in agriculture and logistics.",
+      color: "primary"
+    }
+  ]
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-primary-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="min-h-screen bg-dark-800 relative overflow-hidden">
+      {/* Background effects */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-primary-500/10 rounded-full blur-[150px]" />
+        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-secondary-500/10 rounded-full blur-[120px]" />
+        {/* Grid pattern */}
+        <div 
+          className="absolute inset-0 opacity-[0.02]"
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(10, 182, 188, 1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(10, 182, 188, 1) 1px, transparent 1px)
+            `,
+            backgroundSize: '80px 80px'
+          }}
+        />
+      </div>
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 pt-28 relative z-10">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          initial="hidden"
+          animate="visible"
+          variants={containerVariants}
           className="text-center mb-16"
         >
-          <motion.h1 
-            className="text-5xl font-bold bg-gradient-to-r from-primary-600 via-accent-600 to-purple-600 bg-clip-text text-transparent mb-6"
+          <motion.span 
+            variants={itemVariants}
+            className="inline-block px-4 py-1.5 rounded-full border border-primary-500/30 bg-primary-500/5 text-primary-400 text-sm tracking-wider uppercase mb-6"
           >
-            About Vayal Agro
+            About Us
+          </motion.span>
+          <motion.h1 
+            variants={itemVariants}
+            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
+          >
+            <span className="text-highlight-500">About</span>
+            <br />
+            <span className="gradient-text font-['Orbitron']">Vayal Agro</span>
           </motion.h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <motion.p 
+            variants={itemVariants}
+            className="text-lg text-highlight-500/50 max-w-2xl mx-auto"
+          >
             Meet the innovative team behind the autonomous agriculture and warehouse robot system
-          </p>
+          </motion.p>
         </motion.div>
 
         {/* Our Vision */}
         <motion.section 
           initial="hidden"
-          animate="visible"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
           variants={containerVariants}
-          className="mb-20"
+          className="mb-24"
         >
           <motion.div 
             variants={itemVariants}
-            className="bg-gradient-to-r from-white/80 to-primary-50/80 backdrop-blur-sm p-10 rounded-3xl shadow-xl border border-gray-100"
+            className="glass-card p-10 md:p-14 rounded-3xl relative overflow-hidden"
           >
-            <div className="text-center mb-8">
-              <Target className="w-16 h-16 text-primary-600 mx-auto mb-4" />
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">Our Vision</h2>
+            {/* Background pattern */}
+            <div className="absolute inset-0 opacity-5">
+              <div className="absolute inset-0" style={{
+                backgroundImage: 'radial-gradient(circle at 2px 2px, #0AB6BC 1px, transparent 0)',
+                backgroundSize: '30px 30px'
+              }} />
             </div>
-            <p className="text-lg text-gray-700 leading-relaxed text-center max-w-4xl mx-auto">
-              At Vayal Agro, we envision a future where autonomous robotics revolutionizes agriculture and warehouse management. 
-              Our cutting-edge system combines precision engineering with intelligent automation to create sustainable, 
-              efficient solutions that reduce manual labor while maximizing productivity. We're committed to developing 
-              technology that not only advances industrial capabilities but also contributes to a more sustainable and 
-              automated future for agriculture and logistics.
-            </p>
+
+            <div className="relative text-center">
+              <motion.div
+                whileHover={{ scale: 1.1, rotate: 360 }}
+                transition={{ duration: 0.6 }}
+                className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-primary-500/20 to-secondary-500/20 border border-primary-500/30 mb-8"
+              >
+                <Target className="w-10 h-10 text-primary-400" />
+              </motion.div>
+              <h2 className="text-3xl md:text-4xl font-bold text-highlight-500 mb-6">
+                Our <span className="gradient-text">Vision</span>
+              </h2>
+              <p className="text-lg text-highlight-500/60 leading-relaxed max-w-4xl mx-auto">
+                At Vayal Agro, we envision a future where autonomous robotics revolutionizes agriculture and warehouse management. 
+                Our cutting-edge system combines precision engineering with intelligent automation to create sustainable, 
+                efficient solutions that reduce manual labor while maximizing productivity. We're committed to developing 
+                technology that not only advances industrial capabilities but also contributes to a more sustainable and 
+                automated future for agriculture and logistics.
+              </p>
+            </div>
           </motion.div>
         </motion.section>
 
@@ -81,34 +150,47 @@ const About = () => {
         <motion.section 
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-50px" }}
           variants={containerVariants}
-          className="mb-20"
+          className="mb-24"
         >
-          <motion.h2 
-            variants={itemVariants}
-            className="text-4xl font-bold text-gray-900 mb-12 text-center"
-          >
-            Our Team
-          </motion.h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <motion.div variants={itemVariants} className="text-center mb-12">
+            <span className="inline-block px-4 py-1.5 rounded-full border border-secondary-500/30 bg-secondary-500/5 text-secondary-400 text-sm tracking-wider uppercase mb-4">
+              The Team
+            </span>
+            <h2 className="text-3xl md:text-4xl font-bold text-highlight-500">
+              Our <span className="gradient-text">Team</span>
+            </h2>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {teamMembers.map((member, index) => (
               <motion.div 
                 key={index} 
                 variants={itemVariants}
-                whileHover={{ 
-                  y: -10,
-                  boxShadow: "0 20px 40px rgba(0,0,0,0.1)"
-                }}
-                className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-gray-100 hover:border-primary-200 transition-all duration-300 group text-center"
+                whileHover={{ y: -8, scale: 1.02 }}
+                className="group glass-card p-8 rounded-2xl text-center cursor-pointer card-3d"
               >
-                <div className="w-20 h-20 bg-gradient-to-r from-primary-500 to-accent-500 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <Users className="w-10 h-10 text-white" />
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-primary-700 transition-colors">
+                <motion.div 
+                  whileHover={{ scale: 1.1 }}
+                  className="relative w-24 h-24 mx-auto mb-6"
+                >
+                  {/* Outer ring */}
+                  <div className="absolute inset-0 rounded-full border-2 border-primary-500/30 group-hover:border-primary-500/60 transition-colors" />
+                  {/* Animated ring */}
+                  <div className="absolute inset-0 rounded-full border border-primary-500/20 animate-ping opacity-30" />
+                  {/* Inner circle with icon */}
+                  <div className="absolute inset-2 rounded-full bg-gradient-to-br from-primary-500/20 to-secondary-500/20 flex items-center justify-center group-hover:shadow-glow-md transition-shadow">
+                    <Users className="w-10 h-10 text-primary-400" />
+                  </div>
+                </motion.div>
+                <h3 className="text-xl font-bold text-highlight-500 mb-2 group-hover:text-primary-400 transition-colors">
                   {member.name}
                 </h3>
-                <p className="text-primary-600 font-medium">{member.role}</p>
+                <p className="text-primary-400 font-medium text-sm tracking-wide">{member.role}</p>
+                
+                {/* Decorative line */}
+                <div className="mt-6 h-0.5 rounded-full bg-gradient-to-r from-transparent via-primary-500/30 to-transparent" />
               </motion.div>
             ))}
           </div>
@@ -118,29 +200,35 @@ const About = () => {
         <motion.section
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-50px" }}
           variants={containerVariants}
-          className="mb-20"
+          className="mb-24"
         >
-          <motion.h2 
-            variants={itemVariants}
-            className="text-4xl font-bold text-gray-900 mb-12 text-center"
-          >
-            Get In Touch
-          </motion.h2>
-          <div className="grid md:grid-cols-2 gap-8">
+          <motion.div variants={itemVariants} className="text-center mb-12">
+            <span className="inline-block px-4 py-1.5 rounded-full border border-primary-500/30 bg-primary-500/5 text-primary-400 text-sm tracking-wider uppercase mb-4">
+              Contact
+            </span>
+            <h2 className="text-3xl md:text-4xl font-bold text-highlight-500">
+              Get In <span className="gradient-text">Touch</span>
+            </h2>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 gap-6">
             <motion.div 
               variants={itemVariants}
-              className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300"
+              whileHover={{ scale: 1.02 }}
+              className="glass-card p-8 rounded-2xl group"
             >
-              <div className="flex items-center mb-6">
-                <Phone className="w-8 h-8 text-primary-600 mr-4" />
-                <h3 className="text-2xl font-bold text-gray-900">Contact Number</h3>
+              <div className="flex items-center gap-4 mb-6">
+                <div className="p-4 rounded-xl bg-gradient-to-br from-primary-500/20 to-secondary-500/20 border border-primary-500/20 group-hover:shadow-glow-sm transition-shadow">
+                  <Phone className="w-8 h-8 text-primary-400" />
+                </div>
+                <h3 className="text-2xl font-bold text-highlight-500">Contact Number</h3>
               </div>
-              <p className="text-lg text-gray-700 mb-4">Ready to discuss your automation needs?</p>
+              <p className="text-highlight-500/50 mb-4">Ready to discuss your automation needs?</p>
               <a 
                 href="tel:9876543210" 
-                className="text-2xl font-bold text-primary-600 hover:text-primary-700 transition-colors"
+                className="text-2xl font-bold gradient-text hover:opacity-80 transition-opacity"
               >
                 9876543210
               </a>
@@ -148,16 +236,19 @@ const About = () => {
 
             <motion.div 
               variants={itemVariants}
-              className="bg-white/80 backdrop-blur-sm p-8 rounded-2xl shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300"
+              whileHover={{ scale: 1.02 }}
+              className="glass-card p-8 rounded-2xl group"
             >
-              <div className="flex items-center mb-6">
-                <Mail className="w-8 h-8 text-primary-600 mr-4" />
-                <h3 className="text-2xl font-bold text-gray-900">Email Address</h3>
+              <div className="flex items-center gap-4 mb-6">
+                <div className="p-4 rounded-xl bg-gradient-to-br from-primary-500/20 to-secondary-500/20 border border-primary-500/20 group-hover:shadow-glow-sm transition-shadow">
+                  <Mail className="w-8 h-8 text-primary-400" />
+                </div>
+                <h3 className="text-2xl font-bold text-highlight-500">Email Address</h3>
               </div>
-              <p className="text-lg text-gray-700 mb-4">Send us your inquiries and feedback</p>
+              <p className="text-highlight-500/50 mb-4">Send us your inquiries and feedback</p>
               <a 
                 href="mailto:jarvisbot2026@gmail.com" 
-                className="text-xl font-bold text-primary-600 hover:text-primary-700 transition-colors break-all"
+                className="text-xl font-bold gradient-text hover:opacity-80 transition-opacity break-all"
               >
                 jarvisbot2026@gmail.com
               </a>
@@ -169,43 +260,64 @@ const About = () => {
         <motion.section
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-50px" }}
           variants={containerVariants}
         >
           <motion.div 
             variants={itemVariants}
-            className="bg-gradient-to-r from-white/80 to-accent-50/80 backdrop-blur-sm p-10 rounded-3xl shadow-xl border border-gray-100"
+            className="glass-card p-10 md:p-14 rounded-3xl relative overflow-hidden"
           >
-            <div className="text-center mb-8">
-              <Heart className="w-16 h-16 text-accent-600 mx-auto mb-4" />
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">Our Mission</h2>
+            {/* Background pattern */}
+            <div className="absolute inset-0 opacity-5">
+              <div className="absolute inset-0" style={{
+                backgroundImage: 'radial-gradient(circle at 2px 2px, #045C43 1px, transparent 0)',
+                backgroundSize: '30px 30px'
+              }} />
             </div>
-            <div className="grid md:grid-cols-3 gap-8">
-              <div className="text-center">
-                <Lightbulb className="w-12 h-12 text-primary-600 mx-auto mb-4" />
-                <h3 className="text-xl font-bold text-gray-900 mb-3">Innovation</h3>
-                <p className="text-gray-700">
-                  Continuously pushing the boundaries of autonomous robotics to create smarter, more efficient systems.
-                </p>
+
+            <div className="relative">
+              <div className="text-center mb-12">
+                <motion.div
+                  whileHover={{ scale: 1.1, rotate: 360 }}
+                  transition={{ duration: 0.6 }}
+                  className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-secondary-500/20 to-primary-500/20 border border-secondary-500/30 mb-6"
+                >
+                  <Heart className="w-10 h-10 text-secondary-400" />
+                </motion.div>
+                <h2 className="text-3xl md:text-4xl font-bold text-highlight-500">
+                  Our <span className="gradient-text">Mission</span>
+                </h2>
               </div>
-              <div className="text-center">
-                <Target className="w-12 h-12 text-accent-600 mx-auto mb-4" />
-                <h3 className="text-xl font-bold text-gray-900 mb-3">Precision</h3>
-                <p className="text-gray-700">
-                  Delivering highly accurate and reliable automation solutions for critical agricultural and warehouse operations.
-                </p>
-              </div>
-              <div className="text-center">
-                <Heart className="w-12 h-12 text-purple-600 mx-auto mb-4" />
-                <h3 className="text-xl font-bold text-gray-900 mb-3">Sustainability</h3>
-                <p className="text-gray-700">
-                  Creating environmentally conscious solutions that promote sustainable practices in agriculture and logistics.
-                </p>
+
+              <div className="grid md:grid-cols-3 gap-8">
+                {missions.map((mission, index) => (
+                  <motion.div 
+                    key={index}
+                    variants={itemVariants}
+                    whileHover={{ y: -5 }}
+                    className="text-center group"
+                  >
+                    <div className={`inline-flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-br ${mission.color === 'primary' ? 'from-primary-500/20 to-primary-500/5' : 'from-secondary-500/20 to-secondary-500/5'} border border-${mission.color}-500/20 mb-6 group-hover:shadow-glow-sm transition-shadow`}>
+                      <span className={`${mission.color === 'primary' ? 'text-primary-400' : 'text-secondary-400'}`}>
+                        {mission.icon}
+                      </span>
+                    </div>
+                    <h3 className="text-xl font-bold text-highlight-500 mb-4 group-hover:text-primary-400 transition-colors">
+                      {mission.title}
+                    </h3>
+                    <p className="text-highlight-500/50 leading-relaxed">
+                      {mission.description}
+                    </p>
+                  </motion.div>
+                ))}
               </div>
             </div>
           </motion.div>
         </motion.section>
       </div>
+
+      {/* Bottom spacing */}
+      <div className="h-20" />
     </div>
   )
 }
