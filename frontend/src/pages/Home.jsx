@@ -267,16 +267,133 @@ const Home = () => {
                   <div className="absolute bottom-0 left-0 w-20 h-20 border-l-2 border-b-2 border-primary-500/50 rounded-bl-3xl" />
                   <div className="absolute bottom-0 right-0 w-20 h-20 border-r-2 border-b-2 border-primary-500/50 rounded-br-3xl" />
                   
-                  {/* Spline 3D Viewer */}
-                  <div className="relative aspect-square min-h-[400px] md:min-h-[500px] rounded-2xl overflow-hidden">
-                    <spline-viewer 
-                      url="https://prod.spline.design/HG7beL1WA0rwpr9O/scene.splinecode"
-                      className="w-full h-full"
+                  {/* 3D Robot Visualization */}
+                  <div className="relative aspect-square min-h-[400px] md:min-h-[500px] rounded-2xl overflow-hidden bg-gradient-to-br from-dark-600 to-dark-700">
+                    {/* Animated Robot Illustration */}
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      {/* Central Robot Core */}
+                      <motion.div
+                        animate={{ 
+                          rotateY: [0, 360],
+                        }}
+                        transition={{ 
+                          duration: 20, 
+                          repeat: Infinity, 
+                          ease: "linear" 
+                        }}
+                        style={{ transformStyle: 'preserve-3d' }}
+                        className="relative"
+                      >
+                        {/* Outer Ring */}
+                        <motion.div 
+                          animate={{ rotate: 360 }}
+                          transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                          className="absolute -inset-20 border-2 border-primary-500/20 rounded-full"
+                        />
+                        <motion.div 
+                          animate={{ rotate: -360 }}
+                          transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
+                          className="absolute -inset-28 border border-secondary-500/10 rounded-full border-dashed"
+                        />
+                        
+                        {/* Robot Body */}
+                        <div className="relative w-48 h-48 md:w-64 md:h-64">
+                          {/* Core hexagon */}
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <motion.div
+                              animate={{ scale: [1, 1.05, 1] }}
+                              transition={{ duration: 2, repeat: Infinity }}
+                              className="w-32 h-32 md:w-40 md:h-40 bg-gradient-to-br from-primary-500/30 to-secondary-500/30 rounded-2xl rotate-45 border border-primary-500/50"
+                            />
+                          </div>
+                          
+                          {/* Inner core */}
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <motion.div
+                              animate={{ 
+                                boxShadow: [
+                                  '0 0 20px rgba(10, 182, 188, 0.3)',
+                                  '0 0 40px rgba(10, 182, 188, 0.5)',
+                                  '0 0 20px rgba(10, 182, 188, 0.3)'
+                                ]
+                              }}
+                              transition={{ duration: 2, repeat: Infinity }}
+                              className="w-20 h-20 md:w-24 md:h-24 bg-dark-600 rounded-full border-2 border-primary-500 flex items-center justify-center"
+                            >
+                              <Cpu className="w-10 h-10 md:w-12 md:h-12 text-primary-400" />
+                            </motion.div>
+                          </div>
+                          
+                          {/* Orbiting elements */}
+                          {[0, 1, 2].map((i) => (
+                            <motion.div
+                              key={i}
+                              animate={{ rotate: 360 }}
+                              transition={{ 
+                                duration: 5 + i * 2, 
+                                repeat: Infinity, 
+                                ease: "linear",
+                                delay: i * 0.5
+                              }}
+                              className="absolute inset-0"
+                            >
+                              <div 
+                                className="absolute w-4 h-4 bg-primary-500 rounded-full shadow-glow"
+                                style={{ 
+                                  top: '50%', 
+                                  left: i === 0 ? '-10%' : i === 1 ? '110%' : '50%',
+                                  transform: 'translateY(-50%)'
+                                }}
+                              />
+                            </motion.div>
+                          ))}
+                        </div>
+                      </motion.div>
+                      
+                      {/* Floating data points */}
+                      {[...Array(6)].map((_, i) => (
+                        <motion.div
+                          key={i}
+                          initial={{ 
+                            x: Math.cos(i * 60 * Math.PI / 180) * 150,
+                            y: Math.sin(i * 60 * Math.PI / 180) * 150
+                          }}
+                          animate={{ 
+                            y: [
+                              Math.sin(i * 60 * Math.PI / 180) * 150,
+                              Math.sin(i * 60 * Math.PI / 180) * 150 - 20,
+                              Math.sin(i * 60 * Math.PI / 180) * 150
+                            ]
+                          }}
+                          transition={{ 
+                            duration: 2 + i * 0.3, 
+                            repeat: Infinity,
+                            delay: i * 0.2
+                          }}
+                          className="absolute w-2 h-2 bg-secondary-500/50 rounded-full"
+                        />
+                      ))}
+                    </div>
+                    
+                    {/* Grid overlay */}
+                    <div 
+                      className="absolute inset-0 opacity-10"
+                      style={{
+                        backgroundImage: `
+                          linear-gradient(rgba(10, 182, 188, 0.3) 1px, transparent 1px),
+                          linear-gradient(90deg, rgba(10, 182, 188, 0.3) 1px, transparent 1px)
+                        `,
+                        backgroundSize: '30px 30px'
+                      }}
                     />
                     
                     {/* Scan line effect */}
                     <div className="absolute inset-0 pointer-events-none overflow-hidden">
-                      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary-500/5 to-transparent h-20 animate-scan-line" />
+                      <motion.div 
+                        animate={{ y: ['0%', '100%'] }}
+                        transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+                        className="absolute inset-x-0 h-20 bg-gradient-to-b from-transparent via-primary-500/10 to-transparent" 
+                      />
                     </div>
                   </div>
 
