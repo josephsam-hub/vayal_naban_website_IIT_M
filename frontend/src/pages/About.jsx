@@ -7,8 +7,7 @@ const About = () => {
     { name: "Madhan", role: "Hardware Engineer" },
     { name: "Mahaa Shri", role: "Systems Architect" },
     { name: "Karthika", role: "Software Engineer" },
-    { name: "Shyamalan", role: "Electronics Specialist" },
-    { name: "Bhuvana", role: "Project Coordinator" }
+    
   ]
 
   const containerVariants = {
